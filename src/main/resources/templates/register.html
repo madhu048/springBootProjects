@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>Registration Page</title>
+    </head>
+    <body>
+        <h1>User Registration</h1>
+        <form th:action="@{/movie/saveuser}" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="userName" placeholder="User-Name" required/>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="userPassword" placeholder="User-Password" required/>
+
+            <label for="role">Role:</label>
+            <!-- <input type="text" id="role" name="userRole" placeholder="User-Role" required/> -->
+            <div>
+                <input type="radio" name="userRole" value="USER" checked required/><label> USER</label>
+                <input type="radio" name="userRole" value="ADMIN"/><label> ADMIN</label>
+            </div>
+
+            <label for="email">Email</label>
+            <input type="email" id="email" name="userMail" placeholder="E-mail" required/>
+
+            <label for="contact">Phone No: </label>
+            <input type="tel" id="contact" name="userPhoneNumber" placeholder="Phone number" pattern="[0-9]{10}" required/>
+
+            <label for="gender">Gender</label>
+            <div>
+                <input type="radio" name="userGender" value="Male" required/> Male
+                <input type="radio" name="userGender" value="Female"/> Female
+                <input type="radio" name="userGender" value="Other"/> Other
+            </div>
+
+            <label for="maritalStatus">Marital Status: </label>
+            <div>
+                <input type="radio" name="userMaritalStatus" value="Married" required/> Married
+                <input type="radio" name="userMaritalStatus" value="Unmarried"/> Unmarried
+            </div>
+            
+            <label for="address">Address: </label>
+            <textarea id="address" name="userAddress" placeholder="Enter Your Address"></textarea>
+
+            <label>Profile Image: </label>
+            <input type="file" name="ProfileImage" accept="image/png,image/jpeg" required/>
+
+            <button type="submit">Submit</button>
+
+        </form>
+        <div>
+            <h4 th:text="${failed_message}"></h4>
+            <h4 th:text="${failed_message2}"></h4>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>Registration Failed Page</title>
+    </head>
+    <body>
+        
+        <h1> Registration Failed!, Please click the login button to login.</h1>
+        <label th:text="${failed_message2}"></label>
+        <label th:text="${failed_message}"></label>
+        <form th:action="@{/movie/login}" method="get">
+            <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+            <button type="submit">Login</button>
+        </form>
+    </body>
+</html>

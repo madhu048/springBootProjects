@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>Registration Success Page</title>
+    </head>
+    <body>
+        <label th:text="${dbuserName}"></label>
+        <label th:text="${dbuserRole}"></label>
+        <h1> Registration Successfull!, Please click the login button to login.</h1>
+        <form th:action="@{/movie/login}" method="get">
+            <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+            <button type="submit">Login</button>
+        </form>
+    </body>
+</html>

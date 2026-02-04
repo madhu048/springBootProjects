@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+
+    <title>Movie Info</title>
+</head>
+<body>
+    <div>
+         <h1>This  is my  first Movie</h1>
+    <form th:action="@{/movie/add}" method="post">
+        <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+        <label>Movie Name: </label>
+        <input type ="text" name="movieName" required>
+        <br/>
+        <label>Movie Director: </label>
+        <input type ="text" name="movieDirector" required>
+        <br/>
+        <label>Movie Hero: </label>
+        <input type ="text" name="movieHero" required>
+        <br/>
+        <label>Movie Budget: </label>
+        <input type ="number" name="movieBudget" required>
+        <br/>
+        <label>Movie releaseLanguages: </label>
+        <div>
+            <input type="checkbox" name="languageNames" value="Telugu"/> Telugu
+            <input type="checkbox" name="languageNames" value="English"/> English
+            <input type="checkbox" name="languageNames" value="Hindi"/> Hindi
+        </div>
+        <br/>
+        <button type="submit" th:if="${#authorization.expression('hasRole(''ADMIN'')')}">Add Movie</button>
+        
+    </form>
+    </div>
+   
+    <a th:href="@{/movie/all}"><button>Movie List</button></a>
+    <span>[[${Status}]]</span>
+    <form th:action="@{/logout}" method="post" style="padding-left: 50%;">
+        <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+        <button type="submit">Logout</button>
+    </form>
+</body>
+</html>

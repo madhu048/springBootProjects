@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta  charset="UTF-8">
+        <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+        <meta http-equiv="Pragma" content="no-cache" />
+        <meta http-equiv="Expires" content="0" />
+
+        <title>admin page</title>
+    </head>
+    <body>
+        <h1>Wellcome to Admin page</h1>
+        <span>Movie Details</span>
+        <table border="1" style="border-collapse: collapse;">
+            <thead style="color: blueviolet; background-color: darkgray;">
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Hero</th>
+                    <th>Director</th>
+                    <th>Budget</th>
+                    <th>Languages</th>
+                    <th th:if="${#authorization.expression('hasRole(''ADMIN'')')}">Modifications</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="movieDetails : ${movieList}">
+                    <td th:text="${movieDetails.movieId}"></td>
+                    <td th:text="${movieDetails.movieName}"></td>
+                    <td th:text="${movieDetails.movieHero}"></td>
+                    <td th:text="${movieDetails.movieDirector}"></td>
+                    <td th:text="${movieDetails.movieBudget}"></td>
+                    <td>
+                        <span th:each="language : ${movieDetails.releaseLanguages}"
+                                th:text="${language.releageLanguage}+' '"></span>
+                    </td>
+                    <td th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+                        <!-- <a th:href="@{/movie/delete/{movieId}(movieId=${movieDetails.movieId})}">
+                            <button>Delete</button>
+                        </a> -->
+                        <form th:action="@{/movie/delete/{movieId}(movieId=${movieDetails.movieId})}" method="post">
+                            <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+                            <button type="submit">Delete</button>
+                        </form>
+                        <!-- <a th:href="@{/movie/edit/{movieId}(movieId=${movieDetails.movieId})}"> 
+                            <button>Edit</button>
+                        </a> -->
+                        <form th:action="@{/movie/edit/{movieId}(movieId=${movieDetails.movieId})}" method="post">
+                            <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+                            <button type="submit">Edit</button>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <br/>
+        <a th:href="@{/movie/info}"><button>Home</button></a>
+        <!-- <span>[[${result}]]</span>
+        <span>[[${moviename}]]</span> -->
+        <div th:if="${moviename != null}" style="color: green;">
+            <h3>[[${moviename}]]</h3>
+        </div>
+        <div th:if="${result != null}" style="color: green;">
+            <h3>[[${result}]]</h3>
+        </div>
+        <form th:action="@{/logout}" method="post" style="padding-left: 50%;">
+            <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+            <button type="submit">Logout</button>
+        </form>
+    </body>
+</html>
